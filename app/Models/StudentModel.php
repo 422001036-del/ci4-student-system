@@ -7,4 +7,12 @@ class StudentModel extends Model {
     protected $primaryKey = 'id';
     protected $allowedFields = ['name', 'email', 'course'];
     protected $useSoftDeletes = true;
+
+    public function search($keyword)
+    {
+        return $this->like('name', $keyword)
+                    ->orLike('email', $keyword)
+                    ->orLike('course', $keyword)
+                    ->findAll();
+    }
 }
