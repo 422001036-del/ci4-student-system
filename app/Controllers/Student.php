@@ -18,9 +18,9 @@ class Student extends BaseController
         return view('student_view', $data);
     }
 
-        public function store()
+    public function store()
     {
-        $model = new \App\Models\StudentModel();
+        $model = new StudentModel();
         $model->save([
             'name'   => $this->request->getPost('name'),
             'email'  => $this->request->getPost('email'),
@@ -31,7 +31,7 @@ class Student extends BaseController
 
     public function delete($id)
     {
-        $model = new \App\Models\StudentModel();
+        $model = new StudentModel();
         $model->delete($id);
         return redirect()->to(base_url('student'));
     }
