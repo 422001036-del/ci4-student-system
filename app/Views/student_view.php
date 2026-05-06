@@ -3,27 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <title>Student Management System</title>
-    <style>
-        table { width: 100%; border-collapse: collapse; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        .btn-delete { color: red; text-decoration: none; font-weight: bold; }
-    </style>
+
+    <!-- ✅ Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 
-    <h2>Student List</h2>
+<div class="container mt-5">
 
-    <form action="<?= base_url('student') ?>" method="get">
-        <input type="text" name="search" placeholder="Search by name or email..." value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
-        <button type="submit">Search</button>
-        <a href="<?= base_url('student') ?>">Reset</a>
+    <h2 class="mb-4 text-center">Student List</h2>
+
+    <!-- 🔍 Search -->
+    <form action="<?= base_url('student') ?>" method="get" class="row g-2 mb-3">
+        <div class="col-md-6">
+            <input 
+                type="text" 
+                name="search" 
+                class="form-control"
+                placeholder="Search by name or email..." 
+                value="<?= isset($_GET['search']) ? $_GET['search'] : '' ?>">
+        </div>
+
+        <div class="col-auto">
+            <button type="submit" class="btn btn-primary">Search</button>
+            <a href="<?= base_url('student') ?>" class="btn btn-secondary">Reset</a>
+        </div>
     </form>
 
-    <br>
-
-    <table>
-        <thead>
+    <!-- 📋 Table -->
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
             <tr>
                 <th>ID</th>
                 <th>Name</th>
@@ -42,28 +51,54 @@
                     <td><?= $student['course'] ?></td>
                     <td>
                         <a href="<?= base_url('student/delete/'.$student['id']) ?>" 
-                           class="btn-delete" 
-                           onclick="return confirm('Are you sure you want to delete this record?')">Delete</a>
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Are you sure you want to delete this record?')">
+                           Delete
+                        </a>
                     </td>
                 </tr>
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="5" style="text-align: center;">No students found.</td>
+                    <td colspan="5" class="text-center">No students found.</td>
                 </tr>
             <?php endif; ?>
         </tbody>
     </table>
 
-    <br>
+    <!-- ➕ Add Student -->
+    <div class="card mt-4">
+        <div class="card-header bg-primary text-white">
+            Add New Student
+        </div>
+        <div class="card-body">
+            <form action="<?= base_url('student/store') ?>" method="post">
 
-    <h3>Add New Student</h3>
-    <form action="<?= base_url('student/store') ?>" method="post">
-        <input type="text" name="name" placeholder="Full Name" required><br><br>
-        <input type="email" name="email" placeholder="Email Address" required><br><br>
-        <input type="text" name="course" placeholder="Course" required><br><br>
-        <button type="submit">Save Student</button>
-    </form>
+                <div class="mb-3">
+                    <label class="form-label">Full Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Email Address</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Course</label>
+                    <input type="text" name="course" class="form-control" required>
+                </div>
+
+                <button type="submit" class="btn btn-success">Save Student</button>
+
+            </form>
+        </div>
+    </div>
+
+</div>
+
+<!-- ✅ Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
